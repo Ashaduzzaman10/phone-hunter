@@ -1,24 +1,31 @@
-const loadPhone = async (searchText) => {
+const loadPhone = async (searchText,dataLimit) => {
   const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
   const res = await fetch(url);
   const data = await res.json();
-  displayPhone(data.data);
+  displayPhone(data.data,dataLimit);
 };
 
-const displayPhone = (phones) => {
+const displayPhone = (phones,dataLimit) => {
   const phoneContainer = document.getElementById("phone-hunter");
   phoneContainer.textContent = "";
   phoneContainer.innerHTML = "";
+  const showAll = document.getElementById("show-all");
+  if (dataLimit && phones.length > 9) {
+    phones = phones.slice(0, 9);
+    showAll.classList.remove("d-none");
+  } else {
+    showAll.classList.add("d-none");
+  }
   const notFound = document.getElementById("not-found");
-  phones = phones.slice(0, 9);
+  // phones = phones.slice(0, 9);
   if (phones.length === 0) {
     notFound.classList.remove("d-none");
   } else {
-    notFound.classList.add("d-none")
+    notFound.classList.add("d-none");
   }
   phones.forEach((phone) => {
     const phoneDiv = document.createElement("div");
-  
+
     phoneDiv.classList.add("col");
     phoneDiv.innerHTML = `
      <div class="col">
@@ -41,20 +48,28 @@ const displayPhone = (phones) => {
   toggleSpinner(false);
 };
 document.getElementById("btn-search").addEventListener("click", () => {
-  // start loader 
-  toggleSpinner(true);
-  const searchField = document.getElementById("search-text");
-  const searchText = searchField.value;
-  loadPhone(searchText);
+  // start loader
+  processSearch(10);
 });
 
-
-const toggleSpinner = isLoading => {
+const toggleSpinner = (isLoading) => {
   const loadSection = document.getElementById("loader");
   if (isLoading) {
     loadSection.classList.remove("d-none");
   } else {
-     loadSection.classList.add("d-none");
+    loadSection.classList.add("d-none");
   }
+};
+
+const processSearch = (dataLimit) => {
+   toggleSpinner(true);
+   const searchField = document.getElementById("search-text");
+   const searchText = searchField.value;
+   loadPhone(searchText,dataLimit);
 }
+// show all
+document.getElementById("btn-show-all").addEventListener("click", () => {
+  processSearch()
+});
+
 loadPhone("phone");
