@@ -1,11 +1,11 @@
-const loadPhone = async (searchText,dataLimit) => {
+const loadPhone = async (searchText, dataLimit) => {
   const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
   const res = await fetch(url);
   const data = await res.json();
-  displayPhone(data.data,dataLimit);
+  displayPhone(data.data, dataLimit);
 };
 
-const displayPhone = (phones,dataLimit) => {
+const displayPhone = (phones, dataLimit) => {
   const phoneContainer = document.getElementById("phone-hunter");
   phoneContainer.textContent = "";
   phoneContainer.innerHTML = "";
@@ -38,6 +38,7 @@ const displayPhone = (phones,dataLimit) => {
                   lead-in to additional content. This content is a little bit
                   longer.
                 </p>
+                <button onclick="loadPhoneDetails('${phone.slug}')" class="btn btn-danger rounded-3 fw-bold">Show details</button>
               </div>
             </div>
           </div>
@@ -52,6 +53,12 @@ document.getElementById("btn-search").addEventListener("click", () => {
   processSearch(10);
 });
 
+document.getElementById("search-text").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    processSearch(10);
+  }
+});
+
 const toggleSpinner = (isLoading) => {
   const loadSection = document.getElementById("loader");
   if (isLoading) {
@@ -62,14 +69,20 @@ const toggleSpinner = (isLoading) => {
 };
 
 const processSearch = (dataLimit) => {
-   toggleSpinner(true);
-   const searchField = document.getElementById("search-text");
-   const searchText = searchField.value;
-   loadPhone(searchText,dataLimit);
-}
+  toggleSpinner(true);
+  const searchField = document.getElementById("search-text");
+  const searchText = searchField.value;
+  loadPhone(searchText, dataLimit);
+};
 // show all
 document.getElementById("btn-show-all").addEventListener("click", () => {
-  processSearch()
+  processSearch();
 });
+const loadPhoneDetails = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/phone/${id}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  console.log(data.data);
+};
 
 loadPhone("phone");
