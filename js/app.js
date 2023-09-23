@@ -1,5 +1,5 @@
-const loadPhone = async () => {
-  const url = `https://openapi.programming-hero.com/api/phones?search=iphone`;
+const loadPhone = async (searchText) => {
+  const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
   const res = await fetch(url);
   const data = await res.json();
   displayPhone(data.data);
@@ -13,8 +13,8 @@ const displayPhone = (phones) => {
     phoneDiv.classList.add("col");
     phoneDiv.innerHTML = `
      <div class="col">
-            <div class="card">
-              <img src="${phone.image}" class="card-img-top" alt="..." />
+            <div class="card p-4 gap-1 ms-1 mx-auto container-fluid">
+              <img src="${phone.image}" class="card-img-top img-thumbnail" alt="..." />
               <div class="card-body">
                 <h5 class="card-title">${phone.phone_name}</h5>
                 <p class="card-text">
@@ -30,4 +30,9 @@ const displayPhone = (phones) => {
   });
   
 };
-loadPhone();
+document.getElementById("btn-search").addEventListener("click", () => {
+  const searchField = document.getElementById("search-text");
+  const searchText = searchField.value;
+  loadPhone(searchText)
+});
+loadPhone("phone");
