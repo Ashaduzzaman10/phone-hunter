@@ -33,12 +33,9 @@ const displayPhone = (phones, dataLimit) => {
               <img src="${phone.image}" class="card-img-top img-thumbnail" alt="..." />
               <div class="card-body">
                 <h5 class="card-title">${phone.phone_name}</h5>
-                <p class="card-text">
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </p>
-                <button onclick="loadPhoneDetails('${phone.slug}')" class="btn btn-danger rounded-3 fw-bold">Show details</button>
+                 <button onclick="loadPhoneDetails('${phone.slug}')" class="btn btn-danger rounded-3 fw-bold"  data-bs-toggle="modal"
+               data-bs-toggle="modal"
+        data-bs-target="#phoneDetailsModal">Show details</button>
               </div>
             </div>
           </div>
@@ -82,7 +79,19 @@ const loadPhoneDetails = async (id) => {
   const url = `https://openapi.programming-hero.com/api/phone/${id}`;
   const res = await fetch(url);
   const data = await res.json();
-  console.log(data.data);
+  phoneDetails(data.data);
 };
-
+const phoneDetails = (phone) => {
+  const modalTitle = document.getElementById("phoneDetailsModalLabel");
+  modalTitle.innerText = phone.name;
+  const modalBody = document.getElementById("modal-body");
+  modalBody.innerHTML = `
+  <p> Release data : ${phone.releaseDate ? phone.releaseDate : "no release date found ! "
+    }</p>
+  <p> Release data : ${phone.mainFeature ? phone.mainFeature.storage : "not found !"
+    }</p>
+  <p> Release data : ${phone.others ? phone.others.Bluetooth : "   not found ! "
+    }</p>
+  `;
+};
 loadPhone("phone");
