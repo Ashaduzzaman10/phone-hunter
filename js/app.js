@@ -9,7 +9,9 @@ const displayPhone = (phones) => {
   const phoneContainer = document.getElementById("phone-hunter");
   phones.forEach((phone) => {
     const phoneDiv = document.createElement("div");
-    phoneDiv.innerHTML = '';
+    phoneDiv.innerHTML = "";
+    phoneDiv.textContent = '';
+    phones = phones.slice(0, 6);
     phoneDiv.classList.add("col");
     phoneDiv.innerHTML = `
      <div class="col">
@@ -28,11 +30,10 @@ const displayPhone = (phones) => {
     `;
     phoneContainer.appendChild(phoneDiv);
   });
-  
 };
 document.getElementById("btn-search").addEventListener("click", () => {
   const searchField = document.getElementById("search-text");
   const searchText = searchField.value;
-  loadPhone(searchText)
+  loadPhone(searchText);
 });
 loadPhone("phone");
