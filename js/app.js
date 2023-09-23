@@ -4,14 +4,21 @@ const loadPhone = async (searchText) => {
   const data = await res.json();
   displayPhone(data.data);
 };
+
 const displayPhone = (phones) => {
-  // console.log(phones);
   const phoneContainer = document.getElementById("phone-hunter");
+  phoneContainer.textContent = "";
+  phoneContainer.innerHTML = "";
+  const notFound = document.getElementById("not-found");
+  phones = phones.slice(0, 9);
+  if (phones.length === 0) {
+    notFound.classList.remove("d-none");
+  } else {
+    notFound.classList.add("d-none")
+  }
   phones.forEach((phone) => {
     const phoneDiv = document.createElement("div");
-    phoneDiv.innerHTML = "";
-    phoneDiv.textContent = '';
-    phones = phones.slice(0, 6);
+  
     phoneDiv.classList.add("col");
     phoneDiv.innerHTML = `
      <div class="col">

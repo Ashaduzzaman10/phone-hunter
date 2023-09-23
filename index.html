@@ -17,20 +17,27 @@
     </header>
     <main class="container">
       <!-- display search result  -->
-      <section class="container-fluid ">
+      <section class="container-fluid">
         <div class="mb-3 d-inline-flex gap-3 text-center">
           <input
-            id = "search-text"
+            id="search-text"
             type="text"
             class="form-control w-70 rounded-3"
             placeholder="search phone"
           />
-          <div id="btn-search"><button class="btn btn-danger mt-2 rounded-3 " type="button">search</button></div>
+          <div id="btn-search">
+            <button class="btn btn-danger mt-2 rounded-3" type="button">
+              search
+            </button>
+          </div>
         </div>
       </section>
       <section class="container-fluid">
         <div class="row row-cols-1 row-cols-md-3 g-4" id="phone-hunter">
           <!-- js will add phone here dynamically  -->
+        </div>
+        <div class="container-fluid bg-warning mt-4" id="not-found">
+          <h1 class="text-bg-warning mt-2 rounded-2">No item found!!</h1>
         </div>
       </section>
     </main>
